@@ -12,6 +12,6 @@ class IndexController{
     }
 
     public function index(){
-
+        require _VIEW_PATH_ . 'index.php';
     }
 }

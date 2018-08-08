@@ -13,6 +13,6 @@ class AdminController{
     }
 
     public function index(){
-
+        require _VIEW_PATH_ . 'admin.php';
     }
 }
