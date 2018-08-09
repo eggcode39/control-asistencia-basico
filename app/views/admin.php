@@ -49,21 +49,39 @@
                         <p>Registre la hora de asistencia de los usuarios
                         </p>
                     </div>
-                    <div class="col-lg-12">
-                        <center><label>Hora de Entrada para Hoy:</label></center>
-                        <center><input type="time" id="hora_ingreso"></center>
-                    </div>
-                    <div class="col-lg-12">
-                        <center><label style="font-weight: bold;font-size: 25px;">Ya existe una hora fijada para el día de hoy.</label></center>
-                    </div>
+                    <?php
+                        if(count($horario) >= 1){
+                            ?>
+                            <div class="col-lg-12">
+                                <center><label style="font-weight: bold;font-size: 25px;">Ya existe una hora fijada para el día de hoy.</label></center>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col-lg-12">
+                                <center><label>Hora de Entrada para Hoy:</label></center>
+                                <center><input type="time" id="hora_ingreso"></center>
+                            </div>
+                            <?php
+                        }
+                    ?>
                 </div>
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <a role="button" class="btn btn-success">Agregar
-                    </a>
-                    <a role="button" class="btn btn-danger">Eliminar
-                    </a>
+                    <?php
+                    if(count($horario) >= 1){
+                        ?>
+                        <a role="button" class="btn btn-danger" onclick="eliminarhorario()">Eliminar
+                        </a>
+                        <?php
+                    } else {
+                        ?>
+                        <a role="button" class="btn btn-success" onclick="agregarhorario()">Agregar
+                        </a>
+                        <?php
+                    }
+                    ?>
                 </div>
             </div>
             <!--/.Content-->
@@ -102,13 +120,13 @@
                     </div>
                     <div class="col-lg-12">
                         <label>DNI</label><br>
-                        <input type="text" id="dni_usuario">
+                        <input type="text" id="dni_usuario" maxlength="8">
                     </div>
                 </div>
 
                 <!--Footer-->
                 <div class="modal-footer justify-content-center">
-                    <a role="button" class="btn btn-info">Agregar</a>
+                    <a role="button" class="btn btn-info" onclick="agregarusuario()">Agregar</a>
                 </div>
             </div>
             <!--/.Content-->
@@ -151,7 +169,7 @@
                 <!-- Right -->
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item">
-                        <a href="#" class="nav-link border border-light rounded waves-effect" target="_blank">
+                        <a  class="nav-link border border-light rounded waves-effect" onclick="salir()">
                             <i class="fa fa-ban mr-2"></i>Salir
                         </a>
                     </li>
@@ -287,6 +305,83 @@
 <script type="text/javascript">
     // Animations initialization
     new WOW().init();
+
+    function salir() {
+            var cadena = "usuario=si";
+            $.ajax({
+                type: "POST",
+                url: "index.php?c=Admin&a=salir",
+                data: cadena,
+                success:function (r) {
+                    if(r==1){
+                        location.href = "index.php"
+                    } else {
+                        alert('Error de PHP');
+                    }
+
+                }
+            });
+    }
+
+    function agregarusuario() {
+        var nombre = $('#nombre_usuario').val();
+        var apellido = $('#apellido_usuario').val();
+        var dni = $('#dni_usuario').val();
+        var cadena = "nombre=" + nombre +
+                    "&apellido=" + apellido +
+                    "&dni=" + dni;
+        $.ajax({
+            type: "POST",
+            url: "index.php?c=Admin&a=agregarusuario",
+            data: cadena,
+            success:function (r) {
+                if(r==1){
+                    alert('Ingreso Exitoso');
+                    location.href = "index.php?c=Admin&a=index"
+                } else {
+                    alert('Error');
+                }
+
+            }
+        });
+    }
+
+    function agregarhorario() {
+        var hora = $('#hora_ingreso').val();
+        var cadena = "hora=" + hora;
+        $.ajax({
+            type: "POST",
+            url: "index.php?c=Admin&a=agregarhorario",
+            data: cadena,
+            success:function (r) {
+                if(r==1){
+                    alert('Ingreso Exitoso');
+                    location.href = "index.php?c=Admin&a=index"
+                } else {
+                    alert('Error');
+                }
+
+            }
+        });
+    }
+
+    function eliminarhorario() {
+        var cadena = "id=" + 1;
+        $.ajax({
+            type: "POST",
+            url: "index.php?c=Admin&a=eliminarhorario",
+            data: cadena,
+            success:function (r) {
+                if(r==1){
+                    alert('Hora de Ingreso Borrada');
+                    location.href = "index.php?c=Admin&a=index"
+                } else {
+                    alert('Error');
+                }
+
+            }
+        });
+    }
 </script>
 
 </body>

@@ -13,7 +13,7 @@ class Database{
 
     public static function getConnection(){
         if(empty(self::$db)){
-            $pdo = new PDO('mysql:host=localhost;dbname=segciurobos;charset=utf8','root','');
+            $pdo = new PDO('mysql:host=localhost;dbname=bdasistenciabasica;charset=utf8','root','');
 
             //Sirve para indicar al PDO que todo lo que retorne sean objetos
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);

@@ -47,16 +47,16 @@
                     <h5 class="mt-1 mb-2">Inicio de Sesión</h5>
 
                     <div class="md-form ml-0 mr-0">
-                        <input type="password" type="text" id="form1" class="form-control ml-0">
-                        <label for="form1" id="usuario" class="ml-0">Usuario</label>
+                        <input type="text" type="text" id="usuario" class="form-control ml-0">
+                        <label for="form1"  class="ml-0">Usuario</label>
                     </div>
                     <div class="md-form ml-0 mr-0">
-                        <input type="password" type="text" id="form1" class="form-control ml-0">
-                        <label for="form1" id="contrasenha" class="ml-0">Contraseña</label>
+                        <input type="password" type="text" id="contrasenha" class="form-control ml-0">
+                        <label for="form1"  class="ml-0">Contraseña</label>
                     </div>
 
                     <div class="text-center mt-4">
-                        <button class="btn btn-cyan">Ingresar<i class="fa fa-sign-in ml-1"></i></button>
+                        <button class="btn btn-cyan" onclick="iniciarsesion()">Ingresar<i class="fa fa-sign-in ml-1"></i></button>
                     </div>
                 </div>
 
@@ -276,6 +276,34 @@
 
     function borrar() {
         $('#dni').val('');
+    }
+
+    function iniciarsesion() {
+        var user = "gabriel";
+        var password = "123456";
+
+        var usuario = $('#usuario').val();
+        var contrasenha = $('#contrasenha').val();
+
+        if(usuario == user && password == contrasenha){
+            alert('Inicio de Sesión Correcto');
+            var cadena = "usuario=si";
+            $.ajax({
+                type: "POST",
+                url: "index.php?c=Index&a=loguearse",
+                data: cadena,
+                success:function (r) {
+                    if(r==1){
+                        location.href = "index.php?c=Admin&a=index"
+                    } else {
+                        alert('Error de PHP');
+                    }
+
+                }
+            });
+        } else {
+            alert('Datos incorrectos');
+        }
     }
 </script>
 
