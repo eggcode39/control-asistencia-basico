@@ -220,63 +220,55 @@
 
                     <!--Card content-->
                     <div class="card-body">
+                        <?php
+                        if(count($asistentes) >= 1){
+                            ?>
+                            <table class="table table-hover">
+                                <!-- Table head -->
+                                <thead class="blue lighten-4">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombres y Apellidos</th>
+                                    <th>DNI</th>
+                                    <th>Situación</th>
+                                    <th>Diferencia de Tiempo</th>
+                                </tr>
+                                </thead>
+                                <!-- Table head -->
 
-                        <!-- Table  -->
-                        <table class="table table-hover">
-                            <!-- Table head -->
-                            <thead class="blue lighten-4">
-                            <tr>
-                                <th>#</th>
-                                <th>Nombres y Apellidos</th>
-                                <th>DNI</th>
-                                <th>Situación</th>
-                                <th>Diferencia de Tiempo</th>
-                            </tr>
-                            </thead>
-                            <!-- Table head -->
+                                <!-- Table body -->
+                                <tbody>
+                            <?php
+                            $numero = 1;
+                            foreach ($asistentes as $asistente){
+                                $turno = '<div class="btn btn-danger">TARDANZA</div>';
+                                if($asistente->asistencia_estado == 'PUNTUAL'){
+                                    $turno = '<div class="btn btn-success">EN HORA</div>';
+                                }
+                                ?>
+                                <tr>
+                                    <th><?php echo $numero;?></th>
+                                    <td><?php echo $asistente->trabajador_nombre . ' ' . $asistente->trabajador_apellido;?></td>
+                                    <td><?php echo $asistente->trabajador_dni;?></td>
+                                    <td>
+                                        <?php echo $turno;?>
+                                    </td>
+                                    <td><?php echo $asistente->asistencia_tiempo;?></td>
+                                </tr>
+                                <?php
+                            }
+                            ?>
+                                </tbody>
+                            </table>
+                            <?php
+                            $numero++;
+                        } else {
+                            ?>
+                            <h3>Aún no hay asistentes.</h3>
+                            <?php
+                        }
+                        ?>
 
-                            <!-- Table body -->
-                            <tbody>
-                            <tr>
-                                <th>1</th>
-                                <td>Juanito Perez</td>
-                                <td>09800002</td>
-                                <td>
-                                    <div class="btn btn-success">EN HORA</div>
-                                </td>
-                                <td>00:10:10</td>
-                            </tr>
-                            <tr>
-                                <th>2</th>
-                                <td>Pedro Lopez</td>
-                                <td>63528741</td>
-                                <td>
-                                    <div class="btn btn-success">EN HORA</div>
-                                </td>
-                                <td>00:48:10</td>
-                            </tr>
-                            <tr>
-                                <th>3</th>
-                                <td>Gabo Pezo</td>
-                                <td>35621485</td>
-                                <td>
-                                    <div class="btn btn-danger">TARDANZA</div>
-                                </td>
-                                <td>00:98:10</td>
-                            </tr>
-                            <tr>
-                                <th>4</th>
-                                <td>Francisco Marapiri</td>
-                                <td>54654232</td>
-                                <td>
-                                    <div class="btn btn-success">EN HORA</div>
-                                </td>
-                                <td>00:05:10</td>
-                            </tr>
-                            </tbody>
-                            <!-- Table body -->
-                        </table>
-                        <!-- Table  -->
 
                     </div>
 

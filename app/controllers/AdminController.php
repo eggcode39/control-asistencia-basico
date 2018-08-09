@@ -14,6 +14,7 @@ class AdminController{
     }
 
     public function index(){
+        $asistentes = $this->admin->listarasistencia();
         $horario = $this->admin->verificarhorario();
         require _VIEW_PATH_ . 'admin.php';
     }

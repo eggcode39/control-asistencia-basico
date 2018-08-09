@@ -77,7 +77,7 @@ class Admin
         $fecha = date("Y") . '-' . date("m") . '-' . date('d');
 
         try {
-            $stm = $this->pdo->prepare('Select t.trabajador_nombre, t.trabajador_apellido, t.trabajador_id, a.asistencia_estado, a.asistecia_tiempo from asistencia a inner join trabajador t on a.trabajador_id = t.trabajador_id inner join horario h on a.horario_id = h.horario_id where h.horario_fecha = ?');
+            $stm = $this->pdo->prepare('Select t.trabajador_nombre, t.trabajador_apellido, t.trabajador_dni, a.asistencia_estado, a.asistencia_tiempo from asistencia a inner join trabajador t on a.trabajador_id = t.trabajador_id inner join horario h on a.horario_id = h.horario_id where h.horario_fecha = ?');
             $stm->execute([$fecha]);
 
             $result = $stm->fetchAll();
