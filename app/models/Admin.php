@@ -58,6 +58,7 @@ class Admin
 
     public function eliminarhorario(){
         $return = 2;
+        date_default_timezone_set('America/Lima');
         $fecha = date("Y") . '-' . date("m") . '-' . date('d');
         try{
             $sql = 'delete from horario where horario_fecha = ?';

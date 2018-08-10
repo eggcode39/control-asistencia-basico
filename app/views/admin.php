@@ -370,7 +370,6 @@
                 } else {
                     alert('Error');
                 }
-
             }
         });
     }

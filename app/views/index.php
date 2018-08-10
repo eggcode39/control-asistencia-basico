@@ -202,7 +202,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-12">
-                                <center><button class="btn btn-success">Registrar Entrada</button></center>
+                                <center><button class="btn btn-success" onclick="validaracceso()">Registrar Entrada</button></center>
                             </div>
                         </div>
 
@@ -244,6 +244,8 @@
 <script type="text/javascript" src="styles/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="styles/js/mdb.min.js"></script>
+<!-- Moment.js -->
+<script type="text/javascript" src="styles/moment.js"></script>
 <!-- Initializations -->
 <script type="text/javascript">
     // Animations initialization
@@ -298,11 +300,36 @@
                     } else {
                         alert('Error de PHP');
                     }
-
                 }
             });
         } else {
             alert('Datos incorrectos');
+        }
+    }
+
+    function validaracceso() {
+        var horaingreso = '<?php echo $horaoficial;?>';
+        if(horaingreso == ''){
+            alert('Aún no se ha especificado una hora de entrada');
+        } else {
+            //Sacar Hora actual
+            var horai =new Date();
+            var horasactuales = parseInt(horai.getHours());
+            var minutosactuales = parseInt(horai.getMinutes());
+
+            var tiempoactual = (horasactuales*3600) + minutosactuales*60;
+
+            var horasentrada = parseInt(horaingreso.split(":")[0]);
+            var minutosentrada = parseInt(horaingreso.split(":")[1]);
+
+            var tiempoentrada = horasentrada*3600 + minutosentrada*60;
+
+            if(tiempoactual <= tiempoentrada){
+                alert('Usted está registrado a tiempo');
+            } else {
+                var retraso = tiempoactual - tiempoentrada;
+                alert('Usted tiene un retraso de ' + retraso + ' segundos.');
+            }
         }
     }
 </script>

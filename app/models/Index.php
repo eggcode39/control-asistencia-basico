@@ -16,4 +16,22 @@ class Index
         $_SESSION['id'] = 1;
         return $var;
     }
+
+    public function cargarhorario(){
+        $result = [];
+        date_default_timezone_set('America/Lima');
+        $fecha = date("Y") . '-' . date("m") . '-' . date('d');
+
+        try {
+            $stm = $this->pdo->prepare('Select * from horario where horario_fecha = ?');
+            $stm->execute([$fecha]);
+
+            $result = $stm->fetchAll();
+        } catch (Exception $e){
+
+        }
+
+        return $result;
+
+    }
 }

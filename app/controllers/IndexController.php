@@ -14,6 +14,11 @@ class IndexController{
     }
 
     public function index(){
+        $horarios = $this->index->cargarhorario();
+        $horaoficial = '';
+        foreach ($horarios as $horario){
+            $horaoficial = $horario->horario_horaentrada;
+        }
         require _VIEW_PATH_ . 'index.php';
     }
 
