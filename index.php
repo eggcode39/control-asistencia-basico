@@ -41,7 +41,7 @@ if(isset($_SESSION['id'])){
 } else {
     $a = 'index';
     if(isset($_GET['a'])){
-        if($_GET['a'] == "loguearse" || $_GET['a'] == "validar" || $_GET['a'] == "verificarusuario"){
+        if($_GET['a'] == "loguearse" || $_GET['a'] == "validar" || $_GET['a'] == "verificarusuario" || $_GET['a'] == "registrarasistencia"){
             $a = $_GET['a'];
         }
     }

@@ -331,7 +331,7 @@
                     alert('Ingreso Exitoso');
                     location.href = "index.php?c=Admin&a=index"
                 } else {
-                    alert('Error');
+                    alert('Error o Usuario con DNI Duplicado');
                 }
 
             }

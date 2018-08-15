@@ -36,6 +36,20 @@ class Admin
         return $return;
     }
 
+    public function verificardni($dni){
+        $result = [];
+        try {
+            $stm = $this->pdo->prepare('Select * from trabajador where trabajador_dni = ?');
+            $stm->execute([$dni]);
+
+            $result = $stm->fetchAll();
+        } catch (Exception $e){
+
+        }
+
+        return $result;
+    }
+
     public function agregarhorario($hora){
         $return = 2;
         date_default_timezone_set('America/Lima');

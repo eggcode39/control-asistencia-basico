@@ -309,15 +309,18 @@
 
     function validaracceso() {
         var horaingreso = '<?php echo $horaoficial;?>';
+        var horaid = '<?php echo $horaid;?>';
+        var trabajador = $('#dni').val();
         if(horaingreso == ''){
             alert('Aún no se ha especificado una hora de entrada');
         } else {
             //Sacar Hora actual
-            var horai =new Date();
+            var horai = new Date();
             var horasactuales = parseInt(horai.getHours());
             var minutosactuales = parseInt(horai.getMinutes());
+            var segundosactuales = parseInt(horai.getSeconds());
 
-            var tiempoactual = (horasactuales*3600) + minutosactuales*60;
+            var tiempoactual = (horasactuales*3600) + minutosactuales*60 + segundosactuales;
 
             var horasentrada = parseInt(horaingreso.split(":")[0]);
             var minutosentrada = parseInt(horaingreso.split(":")[1]);
@@ -325,10 +328,42 @@
             var tiempoentrada = horasentrada*3600 + minutosentrada*60;
 
             if(tiempoactual <= tiempoentrada){
-                alert('Usted está registrado a tiempo');
+                var tiempo = tiempoentrada - tiempoactual;
+                var minutos = Math.round(tiempo/60);
+                var segundos = tiempo%60;
+                var tiemporegistrado = minutos + ':' + segundos;
+                //alert('Usted está registrado a tiempo con ' + minutos + ' minutos y ' + segundos + ' segundos.');
+                var cadena = "horaid=" + horaid +
+                            "&trabajador=" + trabajador +
+                            "&tiempo=" + tiemporegistrado;
+                $.ajax({
+                    type: "POST",
+                    url: "index.php?c=Index&a=registrarasistencia",
+                    data: cadena,
+                    success:function (r) {
+                        switch (r) {
+                            case '1':
+                                alert('Ingreso Exitoso');
+                                location.href = "index.php?c=Admin&a=index";
+                                break;
+                            case '2':
+                                alert('El usuario no existe en la base de datos.');
+                                break;
+                            case '3':
+                                alert('El usuario ya registró su ingreso.');
+                                break;
+                            default:
+                                alert('Error');
+                                break;
+                        }
+                    }
+                });
             } else {
                 var retraso = tiempoactual - tiempoentrada;
-                alert('Usted tiene un retraso de ' + retraso + ' segundos.');
+                var minutos = Math.round(retraso/60);
+                var segundos = retraso%60;
+                var tiemporegistrado = minutos + ':' + segundos;
+                alert('Usted tiene un retraso de ' + minutos + ' minutos y ' + segundos + ' segundos. El sistema no lo tomará en cuenta.');
             }
         }
     }

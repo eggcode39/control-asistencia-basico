@@ -19,6 +19,10 @@ class AdminController{
         require _VIEW_PATH_ . 'admin.php';
     }
 
+    public function usuarios(){
+
+    }
+
     public function salir(){
         $this->admin->salir();
         echo 1;
@@ -26,11 +30,17 @@ class AdminController{
 
     public function agregarusuario(){
         $model = new Admin();
+        $result = 2;
+        $existencia = [];
         $model->nombre = $_POST['nombre'];
         $model->apellido = $_POST['apellido'];
         $model->dni = $_POST['dni'];
-
-        $result = $this->admin->agregarusuario($model);
+        $existencia = $this->admin->verificardni($model->dni);
+        if(count($existencia) >= 1){
+            $result = 3;
+        } else {
+            $result = $this->admin->agregarusuario($model);
+        }
         echo $result;
     }
 
